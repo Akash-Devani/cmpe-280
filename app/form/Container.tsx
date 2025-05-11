@@ -71,7 +71,7 @@ const Container = () => {
                     body: JSON.stringify({
                         model: "gpt-4o-mini",
                         messages: [{ role: "user", content: prompt }],
-                        max_tokens: 150,
+                        max_tokens: 15000,
                         temperature: 0.7,
                     }),
                 }
@@ -90,9 +90,10 @@ const Container = () => {
             }
 
             const content = data.choices[0].message.content;
-            console.log("API Response:", content);
+            const cleaned = content.replaceAll('**', '').replaceAll('###','') 
+            console.log("API Response:", cleaned);
 
-            state.setAnswer(content);
+            state.setAnswer(cleaned);
         } catch (error) {
             console.error("Error calling OpenAI API:", error);
             alert("Failed to generate response. Please try again.");
